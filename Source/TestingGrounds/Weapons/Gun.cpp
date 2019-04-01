@@ -20,15 +20,15 @@ AGun::AGun()
 
 	FP_MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	FP_MuzzleLocation->SetupAttachment(FP_Gun);
-	FP_MuzzleLocation->SetRelativeLocation(FVector(0.2f, 48.4f, -10.6f));
-
 }
 
 // Called when the game starts or when spawned
 void AGun::BeginPlay()
 {
 	Super::BeginPlay();
-
+	if (FP_MuzzleLocation == nullptr) { return; }
+	FP_MuzzleLocation->SetRelativeLocation(MuzzleLocation);
+	FP_MuzzleLocation->SetRelativeRotation(MuzzleRotation);
 }
 
 // Called every frame
@@ -50,7 +50,6 @@ void AGun::OnFire()
 			const FRotator SpawnRotation = FP_MuzzleLocation->GetComponentRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 			const FVector SpawnLocation = FP_MuzzleLocation->GetComponentLocation();
-
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;

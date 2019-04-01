@@ -35,13 +35,20 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	// Fires the gun
-	void OnFire();
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+		void OnFire();
 
 	void SetAnimInstance(UAnimInstance* Instance);
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 		TSubclassOf<class ABallProjectile> ProjectileClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+		FVector MuzzleLocation = FVector(0.0f, 0.0f, 0.0f);
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+		FRotator MuzzleRotation = FRotator(0.0f, 90.0f, 0.0f);
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
